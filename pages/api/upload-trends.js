@@ -1,4 +1,4 @@
-import { fetchDailyTrends } from '@/lib/fetchTrends';
+import { fetchDailyTrends } from '../../lib/fetchTrends';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
