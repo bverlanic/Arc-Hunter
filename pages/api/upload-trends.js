@@ -1,4 +1,4 @@
-import { fetchDailyTrends } from '../../lib/fetchTrends';
+import { fetchTrends } from '../../lib/fetchTrends';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -9,8 +9,8 @@ const supabase = createClient(
 export default async function handler(req, res) {
   try {
     console.log('Fetching trends...');
-    const trends = await fetchDailyTrends();
-    console.log('Fetched trends:', trends.length);
+    const trends = await fetchTrends();
+    console.log('Fetched', trends.length, 'items');
 
     for (const trend of trends) {
       const { error } = await supabase.from('trends').insert(trend);
