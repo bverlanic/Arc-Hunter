@@ -8,19 +8,21 @@ const supabase = createClient(
 
 export default async function handler(req, res) {
   try {
+    console.log('Fetching trends...');
     const trends = await fetchDailyTrends();
+    console.log('Fetched trends:', trends.length);
 
     for (const trend of trends) {
       const { error } = await supabase.from('trends').insert(trend);
       if (error) {
-        console.error('Supabase insert error:', error);
+        console.error('Insert error:', error);
         throw error;
       }
     }
 
     res.status(200).json({ status: 'Inserted successfully', count: trends.length });
   } catch (err) {
-    console.error('Server error:', err.message || err);
+    console.error('API route error:', err.message || err);
     res.status(500).json({ status: 'error', message: err.message || 'Unknown error' });
   }
 }
