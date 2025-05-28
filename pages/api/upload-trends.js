@@ -1,5 +1,3 @@
-// Triggering redeploy to fix 404
-
 import { fetchDailyTrends } from '../../lib/fetchTrends';
 import { createClient } from '@supabase/supabase-js';
 
@@ -28,3 +26,4 @@ export default async function handler(req, res) {
     res.status(500).json({ status: 'error', message: err.message || 'Unknown error' });
   }
 }
+
