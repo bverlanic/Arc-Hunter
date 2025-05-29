@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({ status: 'Inserted successfully', count: trends.length });
   } catch (err) {
-    console.error('API route error:', err.message || err);
+    console.error('API route error:', err.message);
     res.status(500).json({ status: 'error', message: err.message || 'Unknown error' });
   }
 }
