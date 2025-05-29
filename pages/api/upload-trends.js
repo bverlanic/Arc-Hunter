@@ -1,4 +1,4 @@
-import fetchTrends from '../../lib/fetchTrends';
+import fetchTrends from '../../lib/fetchTrends.js'; // ✅ Correct default import
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -8,7 +8,9 @@ const supabase = createClient(
 
 export default async function handler(req, res) {
   try {
-    const trends = await fetchTrends();
+    console.log('Fetching trends...');
+    const trends = await fetchTrends(); // ✅ Direct call — not fetchTrends.fetchTrends()
+    console.log('Fetched trends:', trends.length);
 
     for (const trend of trends) {
       const { error } = await supabase.from('trends').insert(trend);
@@ -18,9 +20,15 @@ export default async function handler(req, res) {
       }
     }
 
-    res.status(200).json({ status: 'Inserted successfully', count: trends.length });
+    res.status(200).json({
+      status: 'Inserted successfully',
+      count: trends.length,
+    });
   } catch (err) {
-    console.error('API route error:', err.message);
-    res.status(500).json({ status: 'error', message: err.message || 'Unknown error' });
+    console.error('API route error:', err.message || err);
+    res.status(500).json({
+      status: 'error',
+      message: err.message || 'Unknown error',
+    });
   }
 }
